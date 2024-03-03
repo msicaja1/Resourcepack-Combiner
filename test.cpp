@@ -3,5 +3,7 @@ using namespace std;
 
 int main()
 {
-    cout << "Hello World";
+    string word = "{ \"predicate\": {\"custom_model_data\": 5853}, \"model\": \"item/items/blunt\"}";
+
+    cout << word << endl;
 }
