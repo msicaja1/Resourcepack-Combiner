@@ -4,18 +4,37 @@ using namespace std;
 
 class cmdCompiler
 {
+    private:
+    ifstream ifs;
+    ofstream ofs;
+    int lines;
+
     public:
-    
+
+    // Get the number of lines in the JSON file for reading
+    void cmdLineCount() {
+        //Initialize lines to 0
+        lines = 0;
+        string temp;
+        ifs.open("check.txt");
+
+        while (!ifs.eof()) {
+            getline(ifs, temp);
+            lines++;
+        }
+
+        ifs.close();
+        cout << lines << endl;
+    }
+
     void cmdGetter() {
         int i, j;
         string lineCheck, cmd;
 
         // Open the JSON file
-        ifstream ifs;
 	    ifs.open("check.txt");
 
         // Prepare to write onto temp file
-        ofstream ofs;
         ofs.open("cmd_temp.txt");
 
         if (!ofs) { // Error for opening file
@@ -25,7 +44,7 @@ class cmdCompiler
 
         else {
             // Loop to get the custom model data
-            for (i = 0; i < 17; ++i) {
+            for (i = 0; i < lines; ++i) {
                 getline(ifs, lineCheck); // Get the currect line for reading
                 for (j = 0; j < lineCheck.length(); ++j) { // Inner loop to read line character by character
                     if (lineCheck[j] == '}') { // Stop reading once first } is read, as cmd is already obtained
@@ -47,5 +66,6 @@ int main()
 {
     cmdCompiler cmd1;
 
+    cmd1.cmdLineCount();
     cmd1.cmdGetter();
 }
