@@ -30,6 +30,7 @@ class cmdCompiler
     void cmdGetter() {
         int i, j;
         string lineCheck, cmd;
+        string cmdWord = "custom_model_data";
 
         // Open the JSON file
 	    ifs.open("check.txt");
@@ -46,17 +47,20 @@ class cmdCompiler
             // Loop to get the custom model data
             for (i = 0; i < lines; ++i) {
                 getline(ifs, lineCheck); // Get the currect line for reading
-                for (j = 0; j < lineCheck.length(); ++j) { // Inner loop to read line character by character
-                    if (lineCheck[j] == '}') { // Stop reading once first } is read, as cmd is already obtained
-                            break;
-                    }
 
-                    if (lineCheck[j] >= '0' && lineCheck[j] <= '9') { // Get the cmd and copy into temp file
-                        cmd = lineCheck[j];
-                        ofs << cmd;
+                if (lineCheck.find(cmdWord) != std::string::npos) { // if statement to make sure custom model data is the only thing copied
+                    for (j = 0; j < lineCheck.length(); ++j) { // Inner loop to read line character by character
+                        if (lineCheck[j] == '}') { // Stop reading once first } is read, as cmd is already obtained
+                                break;
+                        }
+
+                        if (lineCheck[j] >= '0' && lineCheck[j] <= '9') { // Get the cmd and copy into temp file
+                            cmd = lineCheck[j];
+                            ofs << cmd;
+                        }
                     }
+                    ofs << endl;
                 }
-                ofs << endl;
             }
         }
     }
