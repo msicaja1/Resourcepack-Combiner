@@ -8,7 +8,7 @@ class cmdCompiler
     ifstream ifs;
     ofstream ofs;
     int lines;
-    int cmdCollection[];
+    //int cmdCollection[];
 
     public:
 
@@ -28,7 +28,7 @@ class cmdCompiler
         //cout << lines << endl;
     }
 
-    void cmdGetter(string jsonName) {
+    void cmdGetter(string jsonName, int cmdCollection[]) {
         int i, j, cmdVal, collectionSize;
         int k = -1;
         string lineCheck;
@@ -36,7 +36,7 @@ class cmdCompiler
         string cmdWord = "custom_model_data";
 
         // Open the JSON file
-	    ifs.open("carrot_on_a_stick.json");
+	    ifs.open(jsonName);
 
 
         // Loop to get the custom model data
@@ -69,14 +69,23 @@ class cmdCompiler
 
 int main()
 {
-    cmdCompiler cmd1;
-    string jsonName;
+    cmdCompiler cmd1, cmd2;
+    string jsonName1, jsonName2;
+    int cmdCollection1[5000], cmdCollection2[5000];
 
-    cout << "Type the name of the JSON file you want to compile: ";
-    cin >> jsonName;
+    cout << "Type the names of the JSON file you want to compile: ";
+    cin >> jsonName1;
+    cin >> jsonName2;
 
-    jsonName += ".json";
 
-    cmd1.cmdLineCount(jsonName);
-    cmd1.cmdGetter(jsonName);
+    jsonName1 += ".json";
+    jsonName2 += ".json";
+
+    cmd1.cmdLineCount(jsonName1);
+    cmd1.cmdGetter(jsonName1, cmdCollection1);
+
+    cout << "----------END-------------" << endl;
+
+    cmd2.cmdLineCount(jsonName2);
+    cmd2.cmdGetter(jsonName2, cmdCollection2);
 }
